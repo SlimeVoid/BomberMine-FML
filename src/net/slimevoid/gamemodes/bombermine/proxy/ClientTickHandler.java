@@ -3,7 +3,7 @@ package net.slimevoid.gamemodes.bombermine.proxy;
 import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.GuiScreen;
+import net.minecraft.client.gui.GuiScreen;
 import net.slimevoid.gamemodes.bombermine.BomberMineFML;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -44,6 +44,6 @@ public class ClientTickHandler implements ITickHandler {
 	}
 	
 	private void onRenderTick() {
-		BomberMineFML.overlay.drawScreen(0, 0, 0);
+		//BomberMineFML.overlay.drawScreen(0, 0, 0);
 	}
 }

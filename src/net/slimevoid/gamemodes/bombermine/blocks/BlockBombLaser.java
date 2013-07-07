@@ -2,15 +2,26 @@ package net.slimevoid.gamemodes.bombermine.blocks;
 
 import java.util.Random;
 
-import net.minecraft.src.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.world.World;
 
 public class BlockBombLaser extends BlockBomb {
 
 	// CLIENT
 	
-	public BlockBombLaser(int id, int texture, int color, double dropRate) {
-		super(id, texture, color, dropRate);
+	public BlockBombLaser(int id, int color, double dropRate) {
+		super(id, color, dropRate);
 	}
+	
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister iconRegister) {
+        this.blockIcon = Block.obsidian.getIcon(0, 0);
+    }
 
 	@Override
 	public void randomDisplayTick(World world, int x, int y, int z, Random random) {

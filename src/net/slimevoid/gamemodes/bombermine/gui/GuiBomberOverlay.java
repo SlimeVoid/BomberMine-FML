@@ -3,17 +3,19 @@ package net.slimevoid.gamemodes.bombermine.gui;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.FontRenderer;
-import net.minecraft.src.Gui;
-import net.minecraft.src.GuiPlayerInfo;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.Item;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.ScaledResolution;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiPlayerInfo;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.src.ModLoader;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.slimevoid.gamemodes.bombermine.BomberMineFML;
 import net.slimevoid.gamemodes.bombermine.bonus.Bonus;
 
@@ -22,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 public class GuiBomberOverlay extends GuiScreen {
 	
 	public GuiBomberOverlay() {
-		mc = Minecraft.getMinecraft();
+		mc = ModLoader.getMinecraftInstance();
 	}
 	
 	@Override
@@ -115,17 +117,17 @@ public class GuiBomberOverlay extends GuiScreen {
 			return;
 		}
 		
-		if(itemId < 256) {
-			texture = mc.renderEngine.getTexture("/terrain.png");
-			textureId = Block.blocksList[itemId].blockIndexInTexture;
-		} else {
-			texture = mc.renderEngine.getTexture("/gui/items.png");
-			textureId = Item.itemsList[itemId].getIconFromDamage(0);
-		}
+//		if(itemId < 256) {
+//			texture = mc.renderEngine.getTexture("/terrain.png");
+//			textureId = Block.blocksList[itemId].blockIndexInTexture;
+//		} else {
+//			texture = mc.renderEngine.getTexture("/gui/items.png");
+//			textureId = Item.itemsList[itemId].getIconFromDamage(0);
+//		}
 		
 		int maxWidth = 160, maxHeight = 32;
 		
-		mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/achievement/bg.png"));
+//		mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/achievement/bg.png"));
 		drawTexturedModalRect(x, y, 96, 202, width-4, height-4); 
 		drawTexturedModalRect(x+width-4, y, 96+maxWidth-4, 202, 4, height-4);
 		drawTexturedModalRect(x, y+height-4, 96, 202+maxHeight-4, width-4, 4);
@@ -140,10 +142,11 @@ public class GuiBomberOverlay extends GuiScreen {
 		
 		GL11.glColor4f(1, 1, 1, 1);
 		
-		mc.renderEngine.bindTexture(texture);
-		int u = (textureId % 16) * 16;
-		int v = (textureId / 16) * 16;
-		drawTexturedModalRect(x+5, y+5, u, v, 16, 16);
+//		mc.renderEngine.bindTexture(texture);
+//		int u = (textureId % 16) * 16;
+//		int v = (textureId / 16) * 16;
+//		drawTexturedModalRect(x+5, y+5, u, v, 16, 16);
+		drawTexturedModalRect(x+5, y+5, 0, 0, 16, 16);
 		
 	}
 	

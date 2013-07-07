@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.WorldServer;
+import net.minecraft.world.WorldServer;
 
 public class BombermineMainSession extends GameSession {
 	
@@ -25,6 +25,7 @@ public class BombermineMainSession extends GameSession {
 		if (gameSession == null) {
 			gameSession = new BombermanGameSession();
 		}
+//		System.out.println("chips");
 		WorldServer ws = MinecraftServer.getServer().worldServerForDimension(0);
 		ws.setWorldTime(6000);
 		ws.getWorldInfo().setRainTime(0);
@@ -119,7 +120,7 @@ public class BombermineMainSession extends GameSession {
 	}
 	
 	public void resetScores() {
-		for(@SuppressWarnings("unused") Entry<String, Integer> entry : scores.entrySet()) {
+		for(Entry<String, Integer> entry : scores.entrySet()) {
 //			Packet230ModLoader packet = new Packet230ModLoader(); TODO score packet
 //			packet.dataInt = new int[]{1, 0};
 //			packet.dataString = new String[]{entry.getKey()};

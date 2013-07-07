@@ -1,10 +1,10 @@
 package net.slimevoid.gamemodes.bombermine.tileentities;
 
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet132TileEntityData;
-import net.minecraft.src.TileEntity;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityBonus extends TileEntity {
 	

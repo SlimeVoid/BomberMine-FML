@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.ChunkCoordinates;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.slimevoid.gamemodes.bombermine.BomberMineFML;
 import net.slimevoid.gamemodes.bombermine.Utils;
 import net.slimevoid.gamemodes.bombermine.bonus.Bonus;
@@ -26,6 +27,8 @@ import net.slimevoid.gamemodes.bombermine.network.CommonPacketHandler;
 import net.slimevoid.gamemodes.bombermine.render.BombRenderer;
 import net.slimevoid.gamemodes.bombermine.tileentities.TileEntityBomb;
 import net.slimevoid.gamemodes.bombermine.tileentities.TileEntityBonus;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBomb extends BlockContainer {
 	
@@ -39,8 +42,8 @@ public class BlockBomb extends BlockContainer {
 	protected float r, g, b;
 	protected float rBase, gBase, bBase, rRand, gRand, bRand;
 	
-	public BlockBomb(int id, int texture, int color, double dropRate) {
-		super(id, texture, Material.iron);
+	public BlockBomb(int id, int color, double dropRate) {
+		super(id, Material.iron);
 		rBase = 1; 		rRand = 0.2F;
 		gBase = 0.6F; 	gRand = 0.2F;
 		bBase = 0;		bRand = 0;
@@ -52,13 +55,19 @@ public class BlockBomb extends BlockContainer {
 	}
 	
 	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister iconRegister) {
+        this.blockIcon = Block.obsidian.getIcon(0, 0);
+    }
+	
+	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 		return AxisAlignedBB.getBoundingBox(x, y, z, x+1, y+2, z+1);
 	}
 	
 	public void explodeClient(World world, int x, int y, int z, int rayon, boolean passTroughWall) {
 		Minecraft.getMinecraft().sndManager.playSound("random.explode", x + .5F, y + .5F, z + .5F, 4, (world.rand.nextFloat() - world.rand.nextFloat()) * .2F + .7F);
-		world.setBlockWithNotify(x, y, z, 0);
+		world.setBlock(x, y, z, 0, 0, 2);
 		for(int i = 0; i < rayon; i++) {
 			if(explodeBlockClient(world, x-i, y, z, passTroughWall)) {
 				break;
@@ -164,7 +173,7 @@ public class BlockBomb extends BlockContainer {
 						
 						BomberMineFML.proxy.mainSession.gameSession.setPlayerSpec(player);
 					} else {
-						entity.attackEntityFrom(DamageSource.explosion, 200);
+						entity.attackEntityFrom(DamageSource.anvil, 200);
 					}
 				}
 			}
@@ -175,7 +184,7 @@ public class BlockBomb extends BlockContainer {
 				return true;
 			} else if(id != 0) {
 				if(id == BomberMineFML.instance.BONUS.blockID) {
-					world.setBlockWithNotify(x, y, z, 0);
+					world.setBlock(x, y, z, 0, 0, 2);
 					return false;
 				} else if(id != 7) {
 					ChunkCoordinates coords = new ChunkCoordinates(x, y, z);
@@ -192,7 +201,8 @@ public class BlockBomb extends BlockContainer {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityliving) {
+	public void onBlockPlacedBy(World world, int x, int y, int z,
+			EntityLivingBase entityliving, ItemStack par6ItemStack) {
 		if(!world.isRemote) {
 			TileEntityBomb tile = (TileEntityBomb) world.getBlockTileEntity(x, y, z);
 			tile.setOwner((EntityPlayerMP) entityliving);
@@ -211,7 +221,7 @@ public class BlockBomb extends BlockContainer {
 		TileEntityBomb tile = (TileEntityBomb) world.getBlockTileEntity(i, j , k);
 		
 		if(metadata < 4) {
-			world.setBlockMetadataWithNotify(i, j, k, metadata+1);
+			world.setBlockMetadataWithNotify(i, j, k, metadata+1, 2);
 			world.scheduleBlockUpdate(i, j, k, blockID, 15);
 		} else {
 			explode(world, i, j, k, getPowerForPlayer(tile.getOwner()), true);
@@ -250,7 +260,7 @@ public class BlockBomb extends BlockContainer {
 		
 		Utils.sendPacketToAll(CommonPacketHandler.computePacketBombExplosion(this.blockID, x, y, z, rayon, passTroughWall));
 		
-		world.setBlockWithNotify(x, y, z, 0);
+		world.setBlock(x, y, z, 0, 0, 2);
 		
 		for(int i = 0; i < rayon; i++) {
 			if(explodeBlock(world, x-i, y, z, killer, passTroughWall)) {
@@ -277,8 +287,8 @@ public class BlockBomb extends BlockContainer {
 			for(ChunkCoordinates coords : toDeleteAndDrop) {
 				int id = world.getBlockId(coords.posX, coords.posY, coords.posZ);
 				boolean drop = id != Block.web.blockID && id != BomberMineFML.instance.FIRE.blockID;
-				world.setBlockWithNotify(coords.posX, coords.posY, coords.posZ, 0);
-				world.setBlockWithNotify(coords.posX, coords.posY+1, coords.posZ, 0);
+				world.setBlock(coords.posX, coords.posY, coords.posZ, 0, 0, 2);
+				world.setBlock(coords.posX, coords.posY+1, coords.posZ, 0, 0, 2);
 				if(drop) {
 					dropBonus(world, coords.posX, coords.posY, coords.posZ);
 				}
@@ -324,7 +334,7 @@ public class BlockBomb extends BlockContainer {
 					
 					BomberMineFML.proxy.mainSession.gameSession.setPlayerSpec(player);
 				} else {
-					entity.attackEntityFrom(DamageSource.explosion, 200);
+					entity.attackEntityFrom(DamageSource.anvil, 200);
 				}
 			}
 		}
@@ -335,7 +345,7 @@ public class BlockBomb extends BlockContainer {
 			return true;
 		} else if(id != 0) {
 			if(id == BomberMineFML.instance.BONUS.blockID) {
-				world.setBlockWithNotify(x, y, z, 0);
+				world.setBlock(x, y, z, 0, 0, 2);
 				return false;
 			} else if(id != 7) {
 				ChunkCoordinates coords = new ChunkCoordinates(x, y, z);
@@ -361,12 +371,12 @@ public class BlockBomb extends BlockContainer {
 				}
 			}
 			if(itemDropped != null) {
-				world.setBlockWithNotify(x, y, z, BomberMineFML.instance.BONUS.blockID);
+				world.setBlock(x, y, z, BomberMineFML.instance.BONUS.blockID, 0, 2);
 				TileEntityBonus tile = (TileEntityBonus) world.getBlockTileEntity(x, y, z);
 				if(tile != null) {
 					tile.setBonusItemID(itemDropped.itemID);
 				} else {
-					world.setBlockWithNotify(x, y, z, 0);
+					world.setBlock(x, y, z, 0, 0, 2);
 					try {
 						throw new Exception("Failed to read TileEntityBonus at "+x+", "+y+", "+z);
 					} catch (Exception e) {

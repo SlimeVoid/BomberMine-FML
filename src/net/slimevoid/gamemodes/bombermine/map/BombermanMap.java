@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.Block;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 import net.slimevoid.gamemodes.bombermine.BomberMineFML;
 
 public class BombermanMap {
@@ -120,8 +120,8 @@ public class BombermanMap {
 			lastSchedule += timeToAdd;
 			
 			if(lastSchedule < System.currentTimeMillis()) {
-				world.setBlockWithNotify(x, 65, z, block);
-				world.setBlockWithNotify(x, 66, z, block);
+				world.setBlock(x, 65, z, block, 0, 2);
+				world.setBlock(x, 66, z, block, 0, 2);
 			} else {
 				TimerTask task = new TimerTask() {
 					
@@ -193,14 +193,14 @@ public class BombermanMap {
 					} else if(y == podiumY && x > podiumStartX && x < podiumEndX && z > podiumStartZ && z < podiumEndZ) {
 						continue;
 					}
-					world.setBlockWithNotify(x, y, z, 0);
+					world.setBlock(x, y, z, 0, 0, 2);
 				}
 			}
 		}
 		
 		for(int x = podiumStartX; x < podiumEndX; x++) {
 			for(int z = podiumStartZ; z < podiumEndZ; z++) {
-				world.setBlockWithNotify(x, podiumY, z, Block.stoneBrick.blockID);
+				world.setBlock(x, podiumY, z, Block.stoneBrick.blockID, 0, 2);
 			}
 		}
 		
@@ -210,12 +210,12 @@ public class BombermanMap {
 					for(int z = 0; z < 2; z++) {
 						int zPos = z + podiumStartZ + 1 + (i == 0 ? 2 : i == 1 ? 0 : 1)*3;
 						if(y < 1+i) {
-							world.setBlockWithNotify(x + 1 + podiumStartX, podiumY+1+y, zPos, Block.obsidian.blockID);
+							world.setBlock(x + 1 + podiumStartX, podiumY+1+y, zPos, Block.obsidian.blockID, 0, 2);
 						} else {
-							int blockID = i == 0 ? Block.blockSteel.blockID : i == 1 ? Block.blockGold.blockID : Block.blockDiamond.blockID;
-							world.setBlockWithNotify(x + 1 + podiumStartX, podiumY+1+y, zPos, blockID);
+							int blockID = i == 0 ? Block.blockIron.blockID : i == 1 ? Block.blockGold.blockID : Block.blockDiamond.blockID;
+							world.setBlock(x + 1 + podiumStartX, podiumY+1+y, zPos, blockID, 0, 2);
 							if(x == 0 && z == 0) {
-								world.setBlockAndMetadataWithNotify(x+ 1 + podiumStartX, podiumY+2+y, zPos, BomberMineFML.instance.PODUIM.blockID, 2-i);
+								world.setBlock(x+ 1 + podiumStartX, podiumY+2+y, zPos, BomberMineFML.instance.PODUIM.blockID, 2-i, 2);
 							}
 						}
 					}
@@ -226,15 +226,14 @@ public class BombermanMap {
 		for(int x = 0; x < mapSize +1; x ++){
 			for(int z = 0; z < mapSize +1; z ++){
 				if (x == 0 || x == mapSize || z == 0 || z == mapSize) {
-					world.setBlockWithNotify(x, 65, z, 7);
-					world.setBlockWithNotify(x, 66, z, 7);
+					world.setBlock(x, 65, z, 7, 0, 2);
+					world.setBlock(x, 66, z, 7, 0, 2);
 					
-					world.setBlockWithNotify(x, 71, z, BomberMineFML.instance.INVISIBLE.blockID);
-					world.setBlockWithNotify(x, 72, z, BomberMineFML.instance.INVISIBLE.blockID);
+					world.setBlock(x, 71, z, BomberMineFML.instance.INVISIBLE.blockID, 0, 2);
+					world.setBlock(x, 72, z, BomberMineFML.instance.INVISIBLE.blockID, 0, 2);
 				}
-				world.setBlockWithNotify(x, 64, z, 7);
-				
-				world.setBlockWithNotify(x, 70, z, BomberMineFML.instance.INVISIBLE.blockID);
+				world.setBlock(x, 64, z, 7, 0, 2);
+				world.setBlock(x, 70, z, BomberMineFML.instance.INVISIBLE.blockID, 0, 2);
 			}
 		}
 	}
@@ -345,8 +344,8 @@ public class BombermanMap {
 		public synchronized void build(World world) {
 			if(!isEmpty()) {
 				for(BlockToSchedule block : this) {
-					world.setBlockWithNotify(block.x, 65, block.z, block.block);
-					world.setBlockWithNotify(block.x, 66, block.z, block.block);
+					world.setBlock(block.x, 65, block.z, block.block, 0, 2);
+					world.setBlock(block.x, 66, block.z, block.block, 0, 2);
 				}
 			}
 			this.clear();

@@ -1,6 +1,6 @@
 package net.slimevoid.gamemodes.bombermine.tileentities;
 
-import net.minecraft.src.Block;
+import net.minecraft.block.Block;
 import net.slimevoid.gamemodes.bombermine.blocks.BlockBomb;
 
 public class TileEntityBomb extends TileEntityOwn {

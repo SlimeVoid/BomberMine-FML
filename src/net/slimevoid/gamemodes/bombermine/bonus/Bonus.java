@@ -3,10 +3,10 @@ package net.slimevoid.gamemodes.bombermine.bonus;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum Bonus {
 	POWER(new ItemStack(Block.fire)			, 9	, 1	, 64	, 1		, 0xdcab26),

@@ -1,7 +1,7 @@
 package net.slimevoid.gamemodes.bombermine.tileentities;
 
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.TileEntity;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityOwn extends TileEntity {
 	

@@ -1,11 +1,11 @@
 package net.slimevoid.gamemodes.bombermine.render;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.Tessellator;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySpecialRenderer;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.slimevoid.gamemodes.bombermine.bonus.Drop;
 import net.slimevoid.gamemodes.bombermine.tileentities.TileEntityBonus;
 
@@ -27,7 +27,8 @@ public class BonusRenderer extends TileEntitySpecialRenderer {
 		
 		//RENDER BASE
 		double yShift = 0.0625 * 2;
-		{	bindTextureByName("/terrain.png");
+		{	
+//			bindTextureByName("/terrain.png");
 		
 			double margin = 0.0625;
 			
@@ -113,13 +114,13 @@ public class BonusRenderer extends TileEntitySpecialRenderer {
 			//RENDER BLOCK END
 			} else { //RENDER ITEM
 				int texture;
-				if(tile.getBonusItemID() > 256) {
-					bindTextureByName("/gui/items.png");
-					texture = Item.itemsList[tile.getBonusItemID()] != null ? Item.itemsList[tile.getBonusItemID()].getIconFromDamage(0) : 0;
-				} else {
-					Block block = Block.blocksList[tile.getBonusItemID()];
-					texture = block != null ? block.blockIndexInTexture : 0;
-				}
+//				if(tile.getBonusItemID() > 256) {
+//					bindTextureByName("/gui/items.png");
+//					texture = Item.itemsList[tile.getBonusItemID()] != null ? Item.itemsList[tile.getBonusItemID()].getIconFromDamage(0) : 0;
+//				} else {
+//					Block block = Block.blocksList[tile.getBonusItemID()];
+//					texture = block != null ? block.blockIndexInTexture : 0;
+//				}
 				
 				GL11.glDisable(GL11.GL_BLEND);
 				GL11.glColor3f(1F, 1F, 1F);
@@ -128,7 +129,8 @@ public class BonusRenderer extends TileEntitySpecialRenderer {
 				
 				double margin = 0.0625 * 3;
 				
-				int u = texture % 16, v = texture / 16;
+//				int u = texture % 16, v = texture / 16;
+				int u = 1, v = 1;
 				double uMin = u/16D, uMax = (u+1)/16D;
 				double vMin = v/16D, vMax = (v+1)/16D;
 				

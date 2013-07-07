@@ -3,16 +3,16 @@ package net.slimevoid.gamemodes.bombermine;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.World;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.slimevoid.gamemodes.bombermine.blocks.BlockBomb;
 import net.slimevoid.gamemodes.bombermine.bonus.Bonus;
 import net.slimevoid.gamemodes.bombermine.map.BombermanMap;
@@ -23,7 +23,7 @@ public class BombermanGameSession extends GameSession {
 	private MinecraftServer server;
 
 	public BombermanGameSession() {
-		super("BomberMine session", BomberMineFML.roundTimeLimmit + BomberMineFML.preStartLenght);
+		super("BomberMine session", BomberMineFML.roundTimeLimit + BomberMineFML.preStartLenght);
 		preStart = BomberMineFML.preStartLenght;
 		mapManager = new BombermanMapManager();
 		nRounds = 0;
@@ -110,7 +110,7 @@ public class BombermanGameSession extends GameSession {
 	@Override
 	public void onTick() {
 		super.onTick();
-		
+//		System.out.println("onTick");
 		gameMap.buildTick();
 		
 		for(EntityPlayerMP player : inGamePlayers) {

@@ -3,8 +3,8 @@ package net.slimevoid.gamemodes.bombermine.map;
 import java.util.Random;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.World;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
 
 public abstract class MapGeneratorFunc {

@@ -1,8 +1,8 @@
 package net.slimevoid.gamemodes.bombermine.render;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.RenderBlocks;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.world.IBlockAccess;
 import net.slimevoid.gamemodes.bombermine.BomberMineFML;
 import net.slimevoid.gamemodes.bombermine.Utils;
 import net.slimevoid.gamemodes.bombermine.blocks.BlockBomb;
@@ -27,8 +27,8 @@ public class BombRenderer implements ISimpleBlockRenderingHandler {
 			GL11.glTranslated(0, 0.15, 0);
 			GL11.glRotatef(-90, 0, 1, 0);
 			Block main = Block.obsidian, wool = Block.cloth;
-			int initialTex = main.blockIndexInTexture;
-			main.blockIndexInTexture = block.blockIndexInTexture;
+//			int initialTex = main.blockIndexInTexture;
+//			main.blockIndexInTexture = block.blockIndexInTexture;
 			main.setBlockBounds(0.25F, 0.125F, 0.125F, 0.75F, 0.625F, 0.875F);
 			renderer.renderBlockAsItem(main, 0, 1F);
 			main.setBlockBounds(0.25F, 0F, 0.25F, 0.75F, 0.75F, 0.75F);
@@ -44,7 +44,7 @@ public class BombRenderer implements ISimpleBlockRenderingHandler {
 				wool.setBlockBounds(0, 0, 0, 1, 1, 1);
 			}
 			
-			main.blockIndexInTexture = initialTex;
+//			main.blockIndexInTexture = initialTex;
 			return;
 		}
 	}

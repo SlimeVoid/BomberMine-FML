@@ -26,6 +26,7 @@ public class GameSession {
 	}
 	
 	public void onTick() {
+//		System.out.println("GameSessionTick " + this.name + " : " + currentTick);
 		if (currentTick == 0) {
 			System.out.println("Session pre-starting : "+name);
 			onPreStart();

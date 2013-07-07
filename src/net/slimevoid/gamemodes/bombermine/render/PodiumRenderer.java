@@ -3,20 +3,20 @@ package net.slimevoid.gamemodes.bombermine.render;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.FontRenderer;
-import net.minecraft.src.GuiPlayerInfo;
-import net.minecraft.src.ItemStack;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiPlayerInfo;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.RenderManager;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
 
 import org.lwjgl.opengl.GL11;
 
-public class PoduimRenderer extends TileEntitySpecialRenderer {
+public class PodiumRenderer extends TileEntitySpecialRenderer {
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -62,7 +62,7 @@ public class PoduimRenderer extends TileEntitySpecialRenderer {
 		player.isDead = false;
 		
 		String username = player.username;
-		player.username = "";
+//		player.username = "";
 		
 		float scale = 2F;
 		
@@ -75,7 +75,7 @@ public class PoduimRenderer extends TileEntitySpecialRenderer {
 		
 		RenderManager renderManager = RenderManager.instance;
 		renderManager.renderEntityWithPosYaw(player, 0, 0, 0, f, 0F);
-		player.username = username;
+//		player.username = username;
 		GL11.glPopMatrix();
 		
 		GL11.glPushMatrix();

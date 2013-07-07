@@ -1,6 +1,6 @@
 package net.slimevoid.gamemodes.bombermine.tileentities;
 
-import net.minecraft.src.TileEntity;
+import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityPodium extends TileEntity {
 }
