@@ -28,6 +28,13 @@ public class CommonPacketHandler implements IPacketHandler {
 			return null;
 		}
 	}
+
+	@Override
+	public void onPacketData(INetworkManager manager,
+			Packet250CustomPayload packet, Player player) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 //	@Override
 //	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
